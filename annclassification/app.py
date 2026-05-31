@@ -223,25 +223,13 @@ html, body, [class*="css"] {
 st.markdown('<div class="app-shell">', unsafe_allow_html=True)
 
 # Hero section
-hero_left, hero_right = st.columns([3.2, 1.2])
+hero_left = st.columns([1])[0]
 with hero_left:
     st.markdown('<h1 class="hero-title">Customer Churn Prediction</h1>', unsafe_allow_html=True)
     st.markdown(
         '<p class="hero-sub">Predict churn risk for retail banking customers with an ANN model and explainable signals.</p>',
         unsafe_allow_html=True,
     )
-
-with hero_right:
-    st.markdown(
-        '<div class="card">'
-        '<div class="metric-label">Model</div>'
-        '<div class="metric-value">ANN v1</div>'
-        '<div class="metric-note">Binary classification</div>'
-        '</div>',
-        unsafe_allow_html=True,
-    )
-
-st.markdown("<hr/>", unsafe_allow_html=True)
 
 st.markdown('<div class="section-title">Customer Profile</div>', unsafe_allow_html=True)
 st.markdown(
@@ -406,10 +394,5 @@ with stack_cols[1]:
         '<div class="metric-note">Metrics shown are representative validation results.</div></div>',
         unsafe_allow_html=True,
     )
-
-st.markdown(
-    '<div class="footer-note">Built for a Data Science/ML portfolio. Predictions should be interpreted alongside business context.</div>',
-    unsafe_allow_html=True,
-)
 
 st.markdown('</div>', unsafe_allow_html=True)
