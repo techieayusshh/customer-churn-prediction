@@ -201,6 +201,10 @@ html, body, [class*="css"] {
     border-radius: 12px !important;
 }
 
+.stSelectbox div[data-baseweb="select"] > div {
+    background: #fff !important;
+}
+
 .stNumberInput input::placeholder {
     color: rgba(11, 18, 32, 0.45) !important;
 }
@@ -221,7 +225,6 @@ st.markdown('<div class="app-shell">', unsafe_allow_html=True)
 # Hero section
 hero_left, hero_right = st.columns([3.2, 1.2])
 with hero_left:
-    st.markdown('<span class="pill">Banking Analytics Dashboard</span>', unsafe_allow_html=True)
     st.markdown('<h1 class="hero-title">Customer Churn Prediction</h1>', unsafe_allow_html=True)
     st.markdown(
         '<p class="hero-sub">Predict churn risk for retail banking customers with an ANN model and explainable signals.</p>',
@@ -248,26 +251,20 @@ st.markdown(
 
 profile_cols = st.columns([1, 1, 1])
 with profile_cols[0]:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
     geography = st.selectbox('Geography', onehot_encoder_geo.categories_[0])
     gender = st.selectbox('Gender', label_encoder_gender.classes_)
     age = st.slider('Age', 18, 92, 32)
     tenure = st.slider('Tenure (years)', 0, 10, 3)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 with profile_cols[1]:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
     credit_score = st.number_input('Credit Score', min_value=300, max_value=900, value=650)
     balance = st.number_input('Balance', min_value=0.0, value=55000.0, step=500.0)
     estimated_salary = st.number_input('Estimated Salary', min_value=0.0, value=75000.0, step=500.0)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 with profile_cols[2]:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
     num_of_products = st.slider('Number of Products', 1, 4, 2)
     has_cr_card = st.selectbox('Has Credit Card', [0, 1])
     is_active_member = st.selectbox('Is Active Member', [0, 1])
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # Prepare the input data
 input_data = pd.DataFrame({
