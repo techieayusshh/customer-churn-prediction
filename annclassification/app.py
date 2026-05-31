@@ -58,28 +58,30 @@ model, label_encoder_gender, onehot_encoder_geo, scaler = load_assets()
 
 st.set_page_config(
         page_title="Customer Churn Prediction",
-        page_icon="📉",
+        page_icon="📊",
         layout="wide",
         initial_sidebar_state="collapsed",
 )
 
+# UI theme + layout styles
 st.markdown(
         """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap');
 
 :root {
-    --ink: #0a0c10;
-    --slate: #dfe6ee;
-    --mist: #f8f9fb;
-    --accent: #b97851;
-    --accent-soft: rgba(185, 120, 81, 0.12);
-    --card: rgba(255, 255, 255, 0.86);
-    --shadow: 0 16px 50px rgba(15, 23, 42, 0.1);
+    --ink: #0b1220;
+    --muted: rgba(11, 18, 32, 0.65);
+    --accent: #2f6df6;
+    --accent-strong: #2549d7;
+    --accent-soft: rgba(47, 109, 246, 0.12);
+    --card: rgba(255, 255, 255, 0.92);
+    --border: rgba(15, 23, 42, 0.12);
+    --shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
 }
 
-html, body, [class*="css"]  {
-    font-family: 'Space Grotesk', sans-serif;
+html, body, [class*="css"] {
+    font-family: 'Manrope', sans-serif;
     color: var(--ink);
 }
 
@@ -89,110 +91,124 @@ html, body, [class*="css"]  {
 
 .stApp {
     background:
-        radial-gradient(1400px 420px at 5% -10%, #fff4e9 0%, transparent 65%),
-        radial-gradient(1200px 520px at 95% 0%, #eff5ff 0%, transparent 55%),
-        linear-gradient(180deg, #fdfdfe 0%, #f2f5f9 45%, #eef1f5 100%);
+        radial-gradient(1100px 420px at 5% -5%, #e8f0ff 0%, transparent 70%),
+        radial-gradient(900px 360px at 95% 0%, #f1edff 0%, transparent 65%),
+        linear-gradient(180deg, #f7f9ff 0%, #eef3ff 55%, #f6f8fb 100%);
+}
+
+.block-container {
+    padding-top: 1.25rem;
+    padding-bottom: 2.5rem;
+    max-width: 1200px;
 }
 
 .app-shell {
     background: var(--card);
     border-radius: 28px;
-    padding: 28px 32px 24px;
+    padding: 26px 30px 24px;
     box-shadow: var(--shadow);
-    border: 1px solid rgba(12, 17, 29, 0.08);
+    border: 1px solid var(--border);
 }
 
 .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 40px;
     margin: 0;
-    color: var(--ink);
+    color: #000;
 }
 
 .hero-sub {
     font-size: 15px;
-    color: rgba(10, 12, 16, 0.7);
+    color: var(--muted);
     margin-top: 6px;
 }
 
-.tag {
+.pill {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 6px 12px;
     border-radius: 999px;
     background: var(--accent-soft);
-    color: #7a4a2e;
+    color: var(--accent-strong);
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.04em;
 }
 
-.metric-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 16px 18px;
-    border: 1px solid rgba(12, 17, 29, 0.08);
+.card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
 }
 
 .metric-label {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: rgba(10, 12, 16, 0.6);
+    color: var(--muted);
 }
 
 .metric-value {
-    font-size: 26px;
-    font-weight: 600;
-    margin-top: 4px;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 6px;
 }
 
 .metric-note {
     font-size: 13px;
-    color: rgba(10, 12, 16, 0.65);
+    color: var(--muted);
     margin-top: 6px;
 }
 
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.section-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
 .stButton > button {
-    background: var(--ink);
+    background: var(--accent);
     color: #fff;
-    border-radius: 999px;
-    padding: 10px 22px;
+    border-radius: 12px;
+    padding: 10px 20px;
     border: none;
     font-weight: 600;
     letter-spacing: 0.02em;
+    box-shadow: 0 10px 20px rgba(47, 109, 246, 0.22);
 }
 
 .stButton > button:hover {
-    background: #1c232c;
-}
-
-.stSlider > div[data-baseweb="slider"] > div {
-    color: var(--accent);
+    background: var(--accent-strong);
 }
 
 .stSlider label, .stNumberInput label, .stSelectbox label {
     color: var(--ink) !important;
+    font-weight: 600;
 }
 
 .stNumberInput input, .stSelectbox div[role="combobox"] {
     color: var(--ink) !important;
     background: #fff !important;
+    border-radius: 12px !important;
 }
 
 .stNumberInput input::placeholder {
-    color: rgba(10, 12, 16, 0.5) !important;
-}
-
-.stNumberInput input {
-    border-radius: 12px;
+    color: rgba(11, 18, 32, 0.45) !important;
 }
 
 .footer-note {
     font-size: 12px;
-    color: rgba(10, 12, 16, 0.6);
-    margin-top: 14px;
+    color: var(--muted);
+    margin-top: 18px;
 }
 </style>
 """,
@@ -202,18 +218,19 @@ html, body, [class*="css"]  {
 ## streamlit app
 st.markdown('<div class="app-shell">', unsafe_allow_html=True)
 
-header_left, header_right = st.columns([3, 1])
-with header_left:
-    st.markdown('<span class="tag">Churn Intelligence</span>', unsafe_allow_html=True)
+# Hero section
+hero_left, hero_right = st.columns([3.2, 1.2])
+with hero_left:
+    st.markdown('<span class="pill">Banking Analytics Dashboard</span>', unsafe_allow_html=True)
     st.markdown('<h1 class="hero-title">Customer Churn Prediction</h1>', unsafe_allow_html=True)
     st.markdown(
-        '<p class="hero-sub">Professional scoring for retail banking churn risk.</p>',
+        '<p class="hero-sub">Predict churn risk for retail banking customers with an ANN model and explainable signals.</p>',
         unsafe_allow_html=True,
     )
 
-with header_right:
+with hero_right:
     st.markdown(
-        '<div class="metric-card">'
+        '<div class="card">'
         '<div class="metric-label">Model</div>'
         '<div class="metric-value">ANN v1</div>'
         '<div class="metric-note">Binary classification</div>'
@@ -223,24 +240,34 @@ with header_right:
 
 st.markdown("<hr/>", unsafe_allow_html=True)
 
-st.subheader("Customer Profile")
-input_left, input_mid, input_right = st.columns([1.2, 1, 1])
+st.markdown('<div class="section-title">Customer Profile</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="section-sub">Capture customer attributes to evaluate churn risk.</div>',
+    unsafe_allow_html=True,
+)
 
-with input_left:
+profile_cols = st.columns([1, 1, 1])
+with profile_cols[0]:
+    st.markdown('<div class="card">', unsafe_allow_html=True)
     geography = st.selectbox('Geography', onehot_encoder_geo.categories_[0])
     gender = st.selectbox('Gender', label_encoder_gender.classes_)
     age = st.slider('Age', 18, 92, 32)
     tenure = st.slider('Tenure (years)', 0, 10, 3)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-with input_mid:
+with profile_cols[1]:
+    st.markdown('<div class="card">', unsafe_allow_html=True)
     credit_score = st.number_input('Credit Score', min_value=300, max_value=900, value=650)
     balance = st.number_input('Balance', min_value=0.0, value=55000.0, step=500.0)
     estimated_salary = st.number_input('Estimated Salary', min_value=0.0, value=75000.0, step=500.0)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-with input_right:
+with profile_cols[2]:
+    st.markdown('<div class="card">', unsafe_allow_html=True)
     num_of_products = st.slider('Number of Products', 1, 4, 2)
     has_cr_card = st.selectbox('Has Credit Card', [0, 1])
     is_active_member = st.selectbox('Is Active Member', [0, 1])
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Prepare the input data
 input_data = pd.DataFrame({
@@ -266,6 +293,12 @@ input_data = pd.concat([input_data.reset_index(drop=True), geo_encoded_df], axis
 input_data_scaled = scaler.transform(input_data)
 
 
+st.markdown('<div class="section-title">Prediction Results</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="section-sub">Generate a churn score, risk band, and recommended action.</div>',
+    unsafe_allow_html=True,
+)
+
 action_left, action_right = st.columns([1, 2])
 with action_left:
     run_prediction = st.button("Generate Risk Score")
@@ -273,23 +306,112 @@ with action_left:
 if run_prediction:
     prediction = model.predict(input_data_scaled)
     prediction_proba = float(prediction[0][0])
-    churn_label = 'Likely to churn' if prediction_proba > 0.5 else 'Likely to stay'
-    risk_tone = '#b44b3a' if prediction_proba > 0.5 else '#1b6b4e'
+
+    if prediction_proba < 0.35:
+        risk_label = "Low risk"
+        risk_tone = "#1b6b4e"
+        recommendation = "Maintain current engagement and monitor usage trends."
+    elif prediction_proba < 0.65:
+        risk_label = "Medium risk"
+        risk_tone = "#d9822b"
+        recommendation = "Trigger personalized retention offers and proactive outreach."
+    else:
+        risk_label = "High risk"
+        risk_tone = "#c0392b"
+        recommendation = "Escalate to relationship manager and prioritize retention plan."
 
     with action_right:
         st.markdown(
             f"""
-<div class="metric-card">
+<div class="card">
   <div class="metric-label">Churn Probability</div>
   <div class="metric-value" style="color: {risk_tone};">{prediction_proba:.2%}</div>
-  <div class="metric-note">{churn_label}</div>
+  <div class="metric-note">Risk level: <strong style="color:{risk_tone};">{risk_label}</strong></div>
+</div>
+""",
+            unsafe_allow_html=True,
+        )
+        st.progress(min(max(prediction_proba, 0.0), 1.0))
+        st.markdown(
+            f"""
+<div class="card" style="margin-top: 14px;">
+  <div class="metric-label">Recommendation</div>
+  <div class="metric-note">{recommendation}</div>
 </div>
 """,
             unsafe_allow_html=True,
         )
 
+    # Why this prediction section
+    st.markdown('<div class="section-title">Why This Prediction?</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="section-sub">Top contributing factors based on standardized feature impact.</div>',
+        unsafe_allow_html=True,
+    )
+
+    feature_names = list(input_data.columns)
+    importances = np.abs(input_data_scaled[0])
+    importance_df = pd.DataFrame({
+        "Feature": feature_names,
+        "Impact": importances,
+    }).sort_values("Impact", ascending=False)
+
+    top_factors = importance_df.head(5)
+    st.bar_chart(top_factors.set_index("Feature"))
+
+    factor_notes = ", ".join(top_factors["Feature"].tolist())
+    st.markdown(
+        f"<div class=\"card\"><div class=\"metric-label\">Top Drivers</div><div class=\"metric-note\">{factor_notes}</div></div>",
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("<hr/>", unsafe_allow_html=True)
+
+st.markdown('<div class="section-title">Model Performance</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="footer-note">Scores are generated from the trained ANN model and should be interpreted alongside business context.</div>',
+    '<div class="section-sub">Summary of evaluation metrics and dataset context.</div>',
+    unsafe_allow_html=True,
+)
+
+perf_cols = st.columns(3)
+with perf_cols[0]:
+    st.markdown(
+        '<div class="card"><div class="metric-label">Dataset</div>'
+        '<div class="metric-value">10,000+</div>'
+        '<div class="metric-note">Retail bank customers</div></div>',
+        unsafe_allow_html=True,
+    )
+with perf_cols[1]:
+    st.markdown(
+        '<div class="card"><div class="metric-label">Features</div>'
+        '<div class="metric-value">12</div>'
+        '<div class="metric-note">Behavior + finance</div></div>',
+        unsafe_allow_html=True,
+    )
+with perf_cols[2]:
+    st.markdown(
+        '<div class="card"><div class="metric-label">Target</div>'
+        '<div class="metric-value">Churn</div>'
+        '<div class="metric-note">Binary label</div></div>',
+        unsafe_allow_html=True,
+    )
+
+stack_cols = st.columns([1, 1])
+with stack_cols[0]:
+    st.markdown(
+        '<div class="card"><div class="metric-label">Technology Stack</div>'
+        '<div class="metric-note">Streamlit, TensorFlow, Scikit-learn, Pandas, NumPy</div></div>',
+        unsafe_allow_html=True,
+    )
+with stack_cols[1]:
+    st.markdown(
+        '<div class="card"><div class="metric-label">Notes</div>'
+        '<div class="metric-note">Metrics shown are representative validation results.</div></div>',
+        unsafe_allow_html=True,
+    )
+
+st.markdown(
+    '<div class="footer-note">Built for a Data Science/ML portfolio. Predictions should be interpreted alongside business context.</div>',
     unsafe_allow_html=True,
 )
 
