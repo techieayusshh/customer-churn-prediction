@@ -16,7 +16,8 @@ Portfolio-ready Streamlit dashboard that predicts retail bank customer churn usi
 
 ## Preview
 
-- Add screenshots or a short GIF here to showcase the UI
+![Dashboard - Inputs and Prediction](Screenshot%202026-05-31%20185156.png)
+![Dashboard - Explainability and Metrics](Screenshot%202026-05-31%20185200.png)
 
 ## Project Structure
 
