@@ -1,34 +1,39 @@
 # Customer Churn Prediction (ANN)
 
-Modern Streamlit dashboard for predicting retail bank customer churn using a trained ANN model. Designed for portfolio-ready demos with clear inputs, risk scoring, and explainability cues.
+Portfolio-ready Streamlit dashboard that predicts retail bank customer churn using a trained Artificial Neural Network (ANN). It delivers a clean UI, risk banding, and explainability hints so the model feels like a real banking analytics product.
 
-## Demo
+## Live Demo
 
-- Streamlit app: add your link here after deployment
+- Streamlit app: https://customer-churn-prediction-k7ejpc7cvz9kvv2dy8utb9.streamlit.app/
 
-## Features
+## Highlights
 
-- Churn probability with risk banding (low/medium/high)
-- Business recommendation based on risk level
-- Clean, dashboard-style UI for portfolio presentations
-- Reusable preprocessing artifacts (encoders + scaler)
+- Instant churn probability with low/medium/high risk banding
+- Business recommendation tailored to risk level
+- Professional dashboard UI with clean spacing and typography
+- Reusable preprocessing artifacts for consistent inference
+- Training and prediction notebooks for reproducibility
+
+## Preview
+
+- Add screenshots or a short GIF here to showcase the UI
 
 ## Project Structure
 
 ```
 annclassification/
-	app.py                     # Streamlit app
-	Churn_Modelling.csv         # Dataset (local use)
-	experiments.ipynb           # Training notebook
-	prediction.ipynb            # Prediction notebook
-	model.h5                    # Trained ANN model
-	label_encoder_gender.pkl    # Gender encoder
-	onehot_encoder_geo.pkl      # Geography encoder
-	scaler.pkl                  # Feature scaler
-	logs/                       # TensorBoard logs
+  app.py                     # Streamlit app
+  Churn_Modelling.csv         # Dataset (local use)
+  experiments.ipynb           # Training notebook
+  prediction.ipynb            # Prediction notebook
+  model.h5                    # Trained ANN model
+  label_encoder_gender.pkl    # Gender encoder
+  onehot_encoder_geo.pkl      # Geography encoder
+  scaler.pkl                  # Feature scaler
+  logs/                       # TensorBoard logs
 ```
 
-## Local Setup
+## Quickstart (Local)
 
 1) Install dependencies
 
@@ -57,20 +62,64 @@ Use these settings:
 - Main file path: annclassification/app.py
 - Python version: 3.11
 
-The repo already includes `runtime.txt` at the root for Python 3.11.
+Note: the repo includes a root `runtime.txt` pinned to Python 3.11.
 
-## Model Notes
+## Data Overview
 
-- Architecture: 2 hidden layers with ReLU, sigmoid output
-- Loss: binary cross-entropy
-- Metrics: accuracy
+The dataset contains customer demographics, account details, and engagement signals used to predict churn.
 
-If you retrain the model, replace `model.h5`, `scaler.pkl`, and encoder files.
+Key feature groups:
 
-## Tech Stack
+- Customer profile: geography, gender, age, tenure
+- Account value: balance, estimated salary
+- Product usage: number of products, credit card, active member
+- Financial signals: credit score
 
-- Python, Streamlit, TensorFlow/Keras
-- Scikit-learn, Pandas, NumPy
+## Model Overview
+
+- Type: Fully connected ANN
+- Activation: ReLU (hidden), sigmoid (output)
+- Loss: Binary cross-entropy
+- Output: Churn probability in the range [0, 1]
+
+If you retrain the model, update these artifacts:
+
+- `model.h5`
+- `scaler.pkl`
+- `label_encoder_gender.pkl`
+- `onehot_encoder_geo.pkl`
+
+## Inference Flow
+
+1) User inputs collected via Streamlit UI
+2) Categorical fields encoded with saved encoders
+3) Numeric fields scaled using the saved scaler
+4) ANN model outputs churn probability
+5) UI renders risk band + recommendation
+
+## Notebooks
+
+- `experiments.ipynb`: end-to-end training workflow
+- `prediction.ipynb`: inference validation and examples
+
+## Technology Stack
+
+- Python 3.11
+- Streamlit
+- TensorFlow/Keras
+- Scikit-learn
+- Pandas, NumPy
+
+## Troubleshooting
+
+If TensorFlow fails to install on Streamlit Cloud:
+
+- Confirm Python is set to 3.11
+- Reboot the app after changing settings
+
+If the app loads but predictions fail:
+
+- Verify `model.h5` and the `.pkl` files exist in `annclassification/`
 
 ## License
 
