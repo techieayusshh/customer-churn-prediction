@@ -102,6 +102,10 @@ html, body, [class*="css"] {
     max-width: 1200px;
 }
 
+div[data-testid="stHorizontalBlock"] {
+    gap: 16px;
+}
+
 .app-shell {
     background: var(--card);
     border-radius: 28px;
@@ -142,6 +146,7 @@ html, body, [class*="css"] {
     padding: 18px;
     border: 1px solid var(--border);
     box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    margin-bottom: 14px;
 }
 
 .metric-label {
