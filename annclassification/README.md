@@ -1,127 +1,43 @@
-# Customer Churn Prediction (ANN)
+# 📊 Retail Bank Customer Churn Prediction Dashboard
 
-Portfolio-ready Streamlit dashboard that predicts retail bank customer churn using a trained Artificial Neural Network (ANN). It delivers a clean UI, risk banding, and explainability hints so the model feels like a real banking analytics product.
+[![Streamlit App](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](https://customer-churn-prediction-k7ejpc7cvz9kvv2dy8utb9.streamlit.app/)
+[![Python Version](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Framework](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-## Live Demo
+A portfolio-ready production analytics dashboard that leverages a deep learning **Artificial Neural Network (ANN)** to predict individual bank customer churn. Built to mimic an enterprise banking application, it provides risk stratification, custom business mitigation recommendations, and localized feature-impact explainability hints.
 
-- Streamlit app: https://customer-churn-prediction-k7ejpc7cvz9kvv2dy8utb9.streamlit.app/
+🔴 **[Live Interactive Demo](https://customer-churn-prediction-k7ejpc7cvz9kvv2dy8utb9.streamlit.app/)**
 
-## Highlights
+---
 
-- Instant churn probability with low/medium/high risk banding
-- Business recommendation tailored to risk level
-- Professional dashboard UI with clean spacing and typography
-- Reusable preprocessing artifacts for consistent inference
-- Training and prediction notebooks for reproducibility
+## ✨ Key Features & Highlights
 
-## Preview
+* 🧠 **Deep Learning Inference:** Implements a fully connected Multi-Layer Perceptron (MLP) built with TensorFlow/Keras.
+* 🚦 **Dynamic Risk Stratification:** Automatically calculates and flags profiles into **Low**, **Medium**, and **High** risk bands.
+* 📈 **Actionable Intelligence:** Renders tailor-made business retention recommendations mapped directly to the predicted risk profile.
+* 🔒 **Production Pipeline Hygiene:** Employs strictly isolated, serialized data-preprocessing artifacts (`StandardScaler`, `OneHotEncoder`) to completely eradicate training data leakage during inference.
+* 🧪 **End-to-End Reproducibility:** Clean Jupyter Notebook workflows documenting every milestone from Exploratory Data Analysis (EDA) to structural optimization.
 
-![Dashboard - Inputs and Prediction](Screenshot%202026-05-31%20185156.png)
-![Dashboard - Explainability and Metrics](Screenshot%202026-05-31%20185200.png)
+---
 
-## Project Structure
+## 📸 Product Interface
 
-```
-annclassification/
-  app.py                     # Streamlit app
-  Churn_Modelling.csv         # Dataset (local use)
-  experiments.ipynb           # Training notebook
-  prediction.ipynb            # Prediction notebook
-  model.h5                    # Trained ANN model
-  label_encoder_gender.pkl    # Gender encoder
-  onehot_encoder_geo.pkl      # Geography encoder
-  scaler.pkl                  # Feature scaler
-  logs/                       # TensorBoard logs
-```
+| User Inputs & Probability Assessment | Financial Impact & Explainability Hints |
+| :---: | :---: |
+| ![Dashboard - Inputs and Prediction](Screenshot%202026-05-31%20185156.png) | ![Dashboard - Explainability and Metrics](Screenshot%202026-05-31%20185200.png) |
 
-## Quickstart (Local)
+---
 
-1) Install dependencies
+## 🛠️ Built with the Modern ML Stack
 
-```
-pip install -r requirements.txt
-```
+* **Core Language:** `Python 3.11`
+* **Deep Learning Engine:** `TensorFlow` / `Keras`
+* **Data Engineering & Scaling:** `Scikit-learn`, `Pandas`, `NumPy`
+* **Web Delivery Architecture:** `Streamlit Cloud`
 
-2) Run the app
+---
 
-```
-streamlit run annclassification/app.py
-```
+## 🗺️ Machine Learning Pipeline Architecture
 
-3) Open in browser
-
-```
-http://localhost:8501
-```
-
-## Streamlit Community Cloud
-
-Use these settings:
-
-- Repository: techieayusshh/customer-churn-prediction
-- Branch: main
-- Main file path: annclassification/app.py
-- Python version: 3.11
-
-Note: the repo includes a root `runtime.txt` pinned to Python 3.11.
-
-## Data Overview
-
-The dataset contains customer demographics, account details, and engagement signals used to predict churn.
-
-Key feature groups:
-
-- Customer profile: geography, gender, age, tenure
-- Account value: balance, estimated salary
-- Product usage: number of products, credit card, active member
-- Financial signals: credit score
-
-## Model Overview
-
-- Type: Fully connected ANN
-- Activation: ReLU (hidden), sigmoid (output)
-- Loss: Binary cross-entropy
-- Output: Churn probability in the range [0, 1]
-
-If you retrain the model, update these artifacts:
-
-- `model.h5`
-- `scaler.pkl`
-- `label_encoder_gender.pkl`
-- `onehot_encoder_geo.pkl`
-
-## Inference Flow
-
-1) User inputs collected via Streamlit UI
-2) Categorical fields encoded with saved encoders
-3) Numeric fields scaled using the saved scaler
-4) ANN model outputs churn probability
-5) UI renders risk band + recommendation
-
-## Notebooks
-
-- `experiments.ipynb`: end-to-end training workflow
-- `prediction.ipynb`: inference validation and examples
-
-## Technology Stack
-
-- Python 3.11
-- Streamlit
-- TensorFlow/Keras
-- Scikit-learn
-- Pandas, NumPy
-
-## Troubleshooting
-
-If TensorFlow fails to install on Streamlit Cloud:
-
-- Confirm Python is set to 3.11
-- Reboot the app after changing settings
-
-If the app loads but predictions fail:
-
-- Verify `model.h5` and the `.pkl` files exist in `annclassification/`
-
-## License
-
-MIT License (see LICENSE).
+The application implements a strict stateless inference loop ensuring production consistency:
